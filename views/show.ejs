@@ -1,0 +1,17 @@
+<%- include('./partials/header') %>
+    <h1><%= product.name %></h1>
+    <div class="container">
+        <img src="<%= product.img %>" alt="">
+        <p><%= product.description %></p>
+        <p>$<%= product.price %></p>        
+        <% if (product.qty === 0) { %>
+            <p>OUT OF STOCK</p>
+            <button disabled="disabled">BUY</button>
+        <% } else { %>
+            <p><%= product.qty %> remaining</p>
+            <button type="submit">BUY</button>
+        <% } %>
+    </div>
+    <a href="/products">Return to Store</a>     
+            
+<%- include('./partials/footer') %>

@@ -1,0 +1,22 @@
+<%- include('./partials/header') %>
+    <h1>Mongoose Store Items</h1>
+    <a href="/products/new">Add New Product</a>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        <% products.forEach(function(product) { %>
+        <tr>
+            <td><%= product.name %></td>
+            <td><%= product.description %></td>
+            <td><a href="/products/<%= product._id %>"><img src="<%= product.img %>" alt=""></a></td>
+            <td>$<%= product.price %></td>
+            <td><%= product.qty %></td>
+        </tr>
+        <% }) %>
+    </table>
+<%- include('./partials/footer') %>
