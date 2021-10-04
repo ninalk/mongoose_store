@@ -1,4 +1,5 @@
 <%- include('./partials/header') %>
+    <a href="/products">Return to Store</a>     
     <h1><%= product.name %></h1>
     <div class="container">
         <img src="<%= product.img %>" alt="">
@@ -9,9 +10,12 @@
             <button disabled="disabled">BUY</button>
         <% } else { %>
             <p><%= product.qty %> remaining</p>
-            <button type="submit">BUY</button>
+            <form action="/products/<%= index %>?_method=PUT" method="POST">
+            
+                <button type="submit">BUY</button>
+            </form>
         <% } %>
+        <a href="/products/<%= index %>/edit">Edit this product</a>
     </div>
-    <a href="/products">Return to Store</a>     
             
 <%- include('./partials/footer') %>
