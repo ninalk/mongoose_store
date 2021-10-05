@@ -26,17 +26,17 @@ app.use(methodOverride('_method'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-// ROUTES
-
+//////////// ROUTES ////////////
 // Index
 app.get('/products', (req, res) => {
     Product.find({}, (err, allProducts) => {
         res.render('index.ejs', {
             products: allProducts,
         })
-    })    
+    }).sort({'price':1})   
 })
 
+// Seed
 app.get('/products/seed', (req, res) => {
     Product.deleteMany({}, (err, allProducts) => {})
     Product.create(productSeed, (err, data) => {
@@ -44,10 +44,12 @@ app.get('/products/seed', (req, res) => {
     })
 })
 
+// New
 app.get('/products/new', (req, res) => {
     res.render('new.ejs')
 })
 
+// Create
 app.post('/products', (req, res) => {   
     const newProduct = {
         name: req.body.name,
@@ -62,6 +64,7 @@ app.post('/products', (req, res) => {
     })
 })
 
+// Show
 app.get('/products/:id', (req, res) => {
     Product.findById(req.params.id, (err, foundProduct) => {
         res.render('show.ejs', {
@@ -71,12 +74,7 @@ app.get('/products/:id', (req, res) => {
     })
 })
 
-
-
-// Update route
-// updates buy button
-
-
+// Edit
 app.get('/products/:id/edit', (req, res) => {
     Product.findById(req.params.id, (err, editProduct) => {
         res.render('edit.ejs', {
@@ -87,7 +85,7 @@ app.get('/products/:id/edit', (req, res) => {
 
 })
 
-// updates product
+// Update
 app.put('/products/:id/edit', (req, res) => {
     Product.findById(req.params.id, (err, product) => {
         product.name = req.body.name
@@ -107,6 +105,7 @@ app.put('/products/:id/edit', (req, res) => {
     })
 })
 
+// Update Buy Button
 app.put('/products/:id', (req, res) => {
     Product.findById(req.params.id, (err, product) => {
         product.qty -= 1
@@ -118,6 +117,19 @@ app.put('/products/:id', (req, res) => {
 
 })
 
+// Delete
+app.delete('/products/:id', (req, res) => {
+    Product.findByIdAndRemove(req.params.id, (err, data) => {
+        res.redirect('/products')
+    })
+})
+
+// User Show
+// app.get('/user/:username', (req, res) {
+
+// })
+
+//////////// Listeners ////////////
 const port = process.env.PORT || 3000
 app.listen(port, () => {
     console.log('listening...')
